@@ -29,6 +29,7 @@ class DB():
   
   def search_movies(self, term):
     collection = self.db.movies
+    # consider text index to use $text
     term = re.compile(term, re.IGNORECASE)
     movies = collection.find({"title" : {"$regex" : term}})
     movies = [convert_movie(movie) for movie in movies]
