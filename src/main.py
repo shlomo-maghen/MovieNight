@@ -53,8 +53,11 @@ def add_movie_to_room(room_id: str, movie_id: str, user_id: str):
   Adds a movie-user combination to a specified room. If the movie_id and user_id combination exists,
   this does nothing.
   """
-  db_client.add_movie_to_room(room_id, movie_id, user_id)
-  return {"success" : True}
+  result = db_client.add_movie_to_room(room_id, movie_id, user_id)
+  if result["success"]:
+    return {"success" : True}
+  else:
+    return {"success" : False}
 
 @app.delete("/remove_movie_from_room")
 def add_movie_to_room(room_id: str, movie_id: str, user_id: str):
