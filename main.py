@@ -26,7 +26,11 @@ def room(room_id: str):
   """
   room = db_client.single_room(room_id)
   if room:
-    return {"success" : True, "room_id" : room["room_id"]}  
+    return {
+      "success" : True,
+      "room_id" : room["room_id"],
+      "movies" : room["movies"] if "movies" in room else []
+    }
   else:
     return {"success" : False, "info" : "room not found"}
 
