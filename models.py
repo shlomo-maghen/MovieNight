@@ -1,3 +1,6 @@
+from pydantic import BaseModel
+
+
 class Movie:
   
   def __init__(self, title, id):
@@ -9,3 +12,8 @@ class Movie:
   
   def id(self):
     return self.id
+  
+class RoomMovie(BaseModel):
+  room_id: str
+  movie_id: str
+  user_id: str

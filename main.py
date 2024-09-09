@@ -1,5 +1,4 @@
-from typing import Union
-
+from models import RoomMovie
 from fastapi import FastAPI
 from db import DB
 
@@ -51,23 +50,23 @@ def search(term: str):
   movies = db_client.search_movies(term)
   return {"success" : True, "movies" : movies}
 
-@app.post("/add_movie_to_room")
-def add_movie_to_room(room_id: str, movie_id: str, user_id: str):
+@app.post("/room_movie")
+def room_movie(roomMovie: RoomMovie):
   """
   Adds a movie-user combination to a specified room. If the movie_id and user_id combination exists,
   this does nothing.
   """
-  result = db_client.add_movie_to_room(room_id, movie_id, user_id)
+  result = db_client.add_movie_to_room(roomMovie)
   if result["success"]:
     return {"success" : True}
   else:
     return {"success" : False}
 
-@app.delete("/remove_movie_from_room")
-def add_movie_to_room(room_id: str, movie_id: str, user_id: str):
+@app.delete("/room_movie")
+def room_movie(roomMovie: RoomMovie):
   """
   Removes a movie-user from a room. If the movie_id and user_id combination doesn't exist, 
   this does nothing.
   """
-  db_client.remove_movie_from_room(room_id, movie_id, user_id)
+  db_client.remove_movie_from_room(roomMovie)
   return {"success" : True}
