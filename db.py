@@ -47,18 +47,23 @@ class DB():
       {"$addToSet": {
         "movies" : {
           "movie_id" : room_movie.movie_id,
-          "user_id" : room_movie.user_id}}})
+          "user_id" : room_movie.user_id,
+          "user_display_name" : room_movie.user_display_name,}}})
     if result.modified_count == 1:
       return {"success" : True}
     else:
-      return {"success" : False}
+      return {"success" : False, "detail" : "Nothing modified"}
       
   def remove_movie_from_room(self, roomMovie: RoomMovie):
     rooms = self.db.rooms
-    rooms.update_one(
+    result = rooms.update_one(
       {"room_id" : roomMovie.room_id},
       {"$pull": {
         "movies" : {
           "movie_id" : roomMovie.movie_id,
           "user_id" : roomMovie.user_id}}})
+    if result.modified_count == 1:
+      return {"success" : True}
+    else:
+      return {"success" : False, "detail" : "Nothing modified"}
     

@@ -17,3 +17,4 @@ class RoomMovie(BaseModel):
   room_id: str
   movie_id: str
   user_id: str
+  user_display_name: str | None = None
