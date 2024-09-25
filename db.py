@@ -2,7 +2,7 @@ import os
 import re
 
 from pymongo import MongoClient
-from models import RoomMovie
+from models import RoomMovie, SearchRequest
 from util import generate_room_id
 from util import convert_movie
 
@@ -32,10 +32,10 @@ class DB():
     room = collection.find_one({"room_id": room_id})
     return room
   
-  def search_movies(self, term: str):
+  def search_movies(self, request: SearchRequest):
     collection = self.db.movies
     # consider text index to use $text
-    term = re.compile(term, re.IGNORECASE)
+    term = re.compile(request.search_term, re.IGNORECASE)
     movies = collection.find({"title" : {"$regex" : term}})
     movies = [convert_movie(movie) for movie in movies]
     return movies
