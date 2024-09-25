@@ -18,6 +18,3 @@ class RoomMovie(BaseModel):
   movie_id: str
   user_id: str
   user_display_name: str | None = None
-  
-class SearchRequest(BaseModel):
-  search_term: str

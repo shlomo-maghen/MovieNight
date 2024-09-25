@@ -1,4 +1,4 @@
-from models import RoomMovie, SearchRequest
+from models import RoomMovie
 from fastapi import FastAPI
 from db import DB
 
@@ -43,11 +43,11 @@ def create_room():
 
 """ Movies """
 @app.get("/search")
-def search(request: SearchRequest):
+def search(term: str):
   """
   Returns a list of movies that contain the search term.
   """
-  movies = db_client.search_movies(request)
+  movies = db_client.search_movies(term)
   return {"success" : True, "movies" : movies}
 
 @app.post("/room_movie")
